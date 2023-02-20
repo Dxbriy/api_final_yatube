@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -53,9 +54,15 @@ class Follow(models.Model):
                                   verbose_name='Подписан',)
 
     class Meta:
-        constraints = (
-            models.UniqueConstraint(
-                fields=('user', 'following'),
-                name='unique_follow',
-            ),
-        )
+        verbose_name = 'Подписки'
+        verbose_name_plural = 'Подписки'
+
+        def __str__(self):
+            return self.following
+
+    def clean(self):
+        if Follow.user == Follow.following:
+            raise ValidationError(
+                'Нельзя подписаться на себя'
+            )
+        super(Follow, self).clean()
