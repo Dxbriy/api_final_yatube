@@ -32,7 +32,6 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
-        ordering = ['id']
 
     def __str__(self):
         return self.text
