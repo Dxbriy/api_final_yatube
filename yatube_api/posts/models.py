@@ -29,6 +29,11 @@ class Post(models.Model):
         related_name='posts'
     )
 
+    class Meta:
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'
+        ordering = ['id']
+
     def __str__(self):
         return self.text
 
